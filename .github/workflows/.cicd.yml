@@ -1,0 +1,48 @@
+name: Django testing and deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  tests:
+    runs-on: ubuntu-22.04
+    env:
+      SECRET_KEY: ${{ secrets.SECRET }}
+      DEBUG: "0"
+      ALLOWED_HOSTS: ${{ secrets.SECRET }}
+      DB_ENGINE: ${{ secrets.SECRET }}
+      DB_NAME: ${{ secrets.SECRET }}
+      DB_USER: ${{ secrets.SECRET }}
+      DB_PASSWORD: ${{ secrets.SECRET }}
+      DB_HOST: ${{ secrets.SECRET }}
+      DB_PORT: ${{ secrets.SECRET }}
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_DB: ${{ secrets.DB_NAME }}
+          POSTGRES_USER: ${{ secrets.DB_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Linting
+        run: flake8 . --exclude logistic/migrations/
+
+      - name: Testing
+        run: python manage.py test .

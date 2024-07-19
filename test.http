@@ -1,0 +1,52 @@
+#  Создание нового датчика
+
+#  POST http://127.0.0.1:8000/create-sensor/
+#  Content-Type: application/json
+
+#  {
+#    "name": "ESP337",
+#    "description": "Датчик седьмой"
+#  }
+
+
+
+
+# Обновление информации о существующем датчике  конкретным АйДи
+
+# PUT http://127.0.0.1:8000/update-sensor/6/
+# Content-Type: application/json
+
+# {
+#   "name": "ESP32 Updated",
+#   "description": "Обновленный датчик 7.02.2024"
+# }
+
+
+# Добавление нового измерения в конкретный датчик
+
+# POST http://127.0.0.1:8000/add-measurement/
+# Content-Type: application/json
+
+# {
+#   "sensor": 6,
+#   "temperature": 255
+# }
+
+
+
+# #Получение списка датчиков
+
+#  GET http://127.0.0.1:8000/get-sensor-list/
+
+
+
+#Получение информаии о конкретном датчике
+
+# GET http://127.0.0.1:8000/get-sensor-info/6/
+
+
+
+# #Удаление датчика
+DELETE http://127.0.0.1:8000/delete-sensor/3/
+
+

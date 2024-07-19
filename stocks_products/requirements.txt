@@ -1,0 +1,7 @@
+django
+djangorestframework
+psycopg2-binary
+# Установка gunicorn
+gunicorn
+django-extensions
+django_filter
